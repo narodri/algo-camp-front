@@ -1,9 +1,11 @@
 'use client' // CSRの設定
 
 import { useEffect, useState } from "react"
+import Header1 from "@/components/Headers/Header1";
 import Link from "next/link";
 import Basic from "@/components/Forms/Basic";
 import Password from "@/components/Forms/Password";
+import Head from "next/head";
 
 export default function Page() {
   const [count, setCount] = useState(0);
@@ -11,13 +13,7 @@ export default function Page() {
 
     return (
       <main>
-        <div className="flex mt-16 min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8"></div>
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-center text-6xl font-bold leading-2 tracking-tight text-gray-900">
-            Fignny Camp!
-          </h2>
-        </div>
-
+        <Header1 title={"Fignny Camp!"}/>
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm" />
           <form className="space-y-6" action="#" method="POST">
             <Basic title={"ID"} message={"Your ID"}/>

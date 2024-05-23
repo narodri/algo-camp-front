@@ -4,8 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link";
 import Logout from "@/components/Buttons/Logout";
 import Label from "@/components/Table/Label";
-import Update from "@/components/Buttons/Update";
-import Delete from "@/components/Buttons/Delete";
+import Row from "@/components/Table/Row";
 import Participate from "@/components/Buttons/Participate";
 import {GET} from "@/app/api/events/route"
 
@@ -53,26 +52,10 @@ export default function Page() {
                                 return (
                                     <tbody>
                                         <tr>
-                                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                                <p className="text-gray-900 whitespace-no-wrap">
-                                                    {event.id}
-                                                </p>
-                                            </td>
-                                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                                <p className="text-gray-900 whitespace-no-wrap">
-                                                    {event.opened_at}
-                                                </p>
-                                            </td>
-                                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                                <p className="text-gray-900 whitespace-no-wrap">
-                                                    {event.end_at}
-                                                </p>
-                                            </td>
-                                            <td className="px-2 py-5 text-sm bg-white border-b border-gray-200">
-                                                <p className="text-gray-900 whitespace-no-wrap">
-                                                <Participate/>
-                                                </p>
-                                            </td>
+                                            <Row title={event.id}/>
+                                            <Row title={event.opened_at}/>
+                                            <Row title={event.end_at}/>
+                                            <Row title={<Participate/>}/>
                                         </tr>
                                     </tbody>
                                 )})}

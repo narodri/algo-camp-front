@@ -1,15 +1,28 @@
-// 'use client' // CSRの設定
+'use client' // CSRの設定
 
-// import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import Link from "next/link";
 import Logout from "@/components/Buttons/Logout";
 import Solve from "@/components/Buttons/Solve";
+import Label from "@/components/Table/Label";
+import {GET} from "@/app/api/questions/route"
 
 export default function Page(props:Params) {
-    let questions = ['q1']
-    let event_id = 1
-    let num_of_questions = 1;
+    const [questions, setQuestions] = useState<any[]>([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await GET();
+                const data = await response.json();
+                setQuestions(data);
+            } catch (error) {
+                console.error('Error fetching questions:', error);
+            }
+        };
+        fetchData();
+    }, []);
+    let num_of_questions = (questions.length);
 
     return(
     <div className="mt-10 space-x-16">
@@ -22,7 +35,7 @@ export default function Page(props:Params) {
                   問題一覧
                 </h1>
                 <h3 className="text-xl mt-14 ml-3">
-                  参加しているイベント：{props.event_id}
+                  参加しているイベント：event {questions.map(a=>{return(a.title)} )}
                 </h3>
             </div>
 
@@ -32,50 +45,35 @@ export default function Page(props:Params) {
                         <table className="min-w-full leading-normal text-center">
                             <thead>
                                 <tr>
-                                    <th scope="col" className="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
-                                      難易度
-                                    </th>
-                                    <th scope="col" className="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
-                                      問題名
-                                    </th>
-                                    <th scope="col" className="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
-                                      実行時間制限
-                                    </th>
-                                    <th scope="col" className="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
-                                      メモリ制限
-                                    </th>
-                                    <th scope="col" className="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
-                                    </th>
+                                    <Label title="難易度"/>
+                                    <Label title="問題名"/>
+                                    <Label title="実行制限時間"/>
+                                    <Label title="メモリ制限"/>
+                                    <Label title=""/>
                                 </tr>
                             </thead>{
-                            questions.map((a,i)=>{
+                            questions.map(question=>{
                                 return (
                                     <tbody>
                                         <tr>
                                             <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                                <div className="flex items-center">
-                                                    <div className="ml-3">
-                                                        <p className="text-gray-900 whitespace-no-wrap">
-                                                        <Link className="font-bold"
-                                                            href="/events/">{i}
-                                                            </Link>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
                                                 <p className="text-gray-900 whitespace-no-wrap">
-                                                    {i}
+                                                    {question.level}
                                                 </p>
                                             </td>
                                             <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
                                                 <p className="text-gray-900 whitespace-no-wrap">
-                                                {i}
+                                                    {question.title}
                                                 </p>
                                             </td>
                                             <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
                                                 <p className="text-gray-900 whitespace-no-wrap">
-                                                {i}
+                                                    {question.time_limit} sec
+                                                </p>
+                                            </td>
+                                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                                                <p className="text-gray-900 whitespace-no-wrap">
+                                                    {question.memory_limit} byte
                                                 </p>
                                             </td>
                                             <td className="px-2 py-5 text-sm bg-white border-b border-gray-200">

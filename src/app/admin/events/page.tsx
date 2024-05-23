@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link";
-import Logout from "@/components/Buttons/Logout";
-import Solve from "@/components/Buttons/Solve";
+import Header2 from "@/components/Headers/Header2";
+import Row from "@/components/Table/Row";
 import Label from "@/components/Table/Label";
 import Update from "@/components/Buttons/Update";
 import Delete from "@/components/Buttons/Delete";
@@ -30,15 +30,7 @@ export default function Page() {
     return(
       <div className="mt-10 space-x-16">
         <div className="container max-w-3xl px-4 mt-24 mx-auto sm:px-8">
-            <div>
-                <h2 className="mt-12 mr-10 text-right">
-                    <Cancel title={"戻る"}/>
-                </h2>
-                <h1 className="font-bold text-5xl mt-3 ml-3">
-                  イベント一覧
-                </h1>
-            </div>
-
+            <Header2 title={"イベント一覧"} path={"/admin/events/create"}/>
             <div className="py-8">
                 <div className="px-4 py-4 mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
                     <div className="inline-block min-w-full overflow-hidden rounded-lg shadow">
@@ -56,31 +48,11 @@ export default function Page() {
                                 return (
                                     <tbody>
                                         <tr>
-                                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                                <p className="text-gray-900 whitespace-no-wrap">
-                                                    {event.id}
-                                                </p>
-                                            </td>
-                                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                                <p className="text-gray-900 whitespace-no-wrap">
-                                                    {event.opened_at}
-                                                </p>
-                                            </td>
-                                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                                <p className="text-gray-900 whitespace-no-wrap">
-                                                    {event.end_at}
-                                                </p>
-                                            </td>
-                                            <td className="px-2 py-5 text-sm bg-white border-b border-gray-200">
-                                                <p className="text-gray-900 whitespace-no-wrap">
-                                                <Update/>
-                                                </p>
-                                            </td>
-                                            <td className="px-2 py-5 text-sm bg-white border-b border-gray-200">
-                                                <p className="text-gray-900 whitespace-no-wrap">
-                                                <Delete/>
-                                                </p>
-                                            </td>
+                                        <Row title={event.id}/>
+                                        <Row title={event.opened_at}/>
+                                        <Row title={event.end_at}/>
+                                        <Row title={<Update/>}/>
+                                        <Row title={<Delete/>}/>
                                         </tr>
                                     </tbody>
                                 )})}
