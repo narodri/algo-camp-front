@@ -8,15 +8,14 @@ export const dynamic = 'force-dynamic' // defaults to auto
 // ]
 
 export async function GET() {
-    const response = await fetch("http://localhost:8000/users");
-    const json = await response.json();
-    // const users1 = [JSON.stringify(json)];
-    // const users = JSON.parse(users1[0]);
-    // const users = [JSON.stringify(json)];
+    const response = await fetch("http://localhost:8000/users/")
+    const users = await response.json();
     return new Response(
-        JSON.stringify(json),
+        // const response = await fetch("http://localhost:8000/users/")
+        // const users = await response.json();
+        JSON.stringify(users),
         {
-            headers: {'Content-Type':'application/json'}
+            headers: {'Content-Type': 'application/json'}
         }
     )
 }

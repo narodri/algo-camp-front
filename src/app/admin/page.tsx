@@ -18,7 +18,7 @@ export default function Page() {
                     <Header1 title={"管 理 者 画 面"}/>
                   </h1>
                   <div className="text-center">
-                    <Menu name="ユーザー管理" path="/admin/users" />
+                    <Menu name="ユーザー管理" path="/admin/users/" />
                     <Menu name="問題管理" path="/admin/questions" />
                     <Menu name="イベント管理" path="/admin/events" />
                     <div className="mt-14">

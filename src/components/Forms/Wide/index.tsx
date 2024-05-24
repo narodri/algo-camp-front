@@ -10,6 +10,7 @@ export default function Wide(props:any){
             </label>
             <textarea
                 id="input-letter"
+                defaultValue={props.value}
                 className="block rounded-md w-full h-64 py-4 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 name={props.name}
                 />
