@@ -6,6 +6,7 @@ import Row from "@/components/Table/Row";
 import Label from "@/components/Table/Label";
 import Delete_user from "@/components/Buttons/Delete/Delete_user";
 import Header2 from "@/components/Headers/Header2";
+import internal from "stream";
 
 export default function Page(props:any) {
     const router = useRouter()
@@ -28,6 +29,12 @@ export default function Page(props:any) {
 
         fetchData();
     }, []);
+    const option = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+        };
 
     return(
     <div className="mt-10 space-x-16">

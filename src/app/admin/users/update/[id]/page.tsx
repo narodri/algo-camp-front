@@ -44,7 +44,7 @@ export default function Page(props:any) {
         throw new Error('Network response was not ok');
       }
       console.log("Server response:", response);
-
+      
       const result = await response.json();
       console.log(result);
       router.push('/admin/users');
