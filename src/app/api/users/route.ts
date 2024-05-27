@@ -1,3 +1,5 @@
+import Password from "@/components/Forms/Password";
+
 export const dynamic = 'force-dynamic' // defaults to auto
 
 
@@ -21,16 +23,21 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-    // const response = await fetch("http://localhost:8000/users/1");
-    // const json = await response.json();
-    // const users = [JSON.stringify(json)];
-
-    // const {id, name, role, password, created_at} = await request.json();
-    // const newUser = {id, name, role, password, created_at};
-    // users.push(newUser);
-    // return new Response(JSON.stringify(newUser), {
-    //     headers: {'Content-Type':'application/json'}
-    // })
+    const user = await request.json();
+    const newuser = {
+        name: user.name,
+        role: user.role,
+        Password: user.password,
+        created_at: user.created_at,
+        logined_at: user.logined_at
+    };
+    user.push(newuser);
+    return new Response(JSON.stringify(newuser), {
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        status: 201,
+    });
 }
 
 export async function PUT(request: Request) {

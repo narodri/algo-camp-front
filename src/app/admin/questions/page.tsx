@@ -8,14 +8,27 @@ import Row from "@/components/Table/Row";
 import Label from "@/components/Table/Label";
 import Delete from "@/components/Buttons/Delete";
 
-export default async function Page(props:Params) {
-    const router=useRouter()
-    const response1 = await fetch("http://localhost:8000/questions/we/")
-    const data = await response1.json();
-    const questions1 = [JSON.stringify(data)];
-    const questions = JSON.parse(questions1[0]);
-    console.log(questions)
-    let num_of_users = (questions.length);
+export default function Page(props:Params) {
+    const router = useRouter()
+    const [questions, setQuestions] = useState<any[]>([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const questionsResponse = await fetch("http://localhost:8000/questions/we/");
+
+                const questionsData = await questionsResponse.json();
+
+                setQuestions(questionsData);
+                console.log(questions)
+
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     return(
     <div className="mt-10 space-x-16">

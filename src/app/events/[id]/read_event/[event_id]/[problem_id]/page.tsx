@@ -1,80 +1,78 @@
-// 'use client' // CSRの設定
+'use client' // CSRの設定
 
 import { useState, useEffect } from "react"
+import { useRouter } from 'next/navigation'
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
-import Row from "@/components/Table/Row";
 import Logout from "@/components/Buttons/Logout";
-import Solve from "@/components/Buttons/Solve";
-import Label from "@/components/Table/Label";
-import {GET} from "@/app/api/questions/route"
+import Input from "@/components/Forms/Input";
+import Wide from "@/components/Forms/Wide";
+import Submit from "@/components/Buttons/Submit";
+import Cancel from "@/components/Buttons/Cancel";
+import Print from "@/components/Forms/Print"
 
-export default async function Page(props:Params) {
-    // const [questions, setQuestions] = useState<any[]>([]);
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const response = await GET();
-    //             const data = await response.json();
-    //             setQuestions(data);
-    //         } catch (error) {
-    //             console.error('Error fetching questions:', error);
-    //         }
-    //     };
-    //     fetchData();
-    // }, []);
-    // let num_of_questions = (questions.length);
-    const response = await fetch("http://localhost:8000/events/wq/"+props.params.event_id)
-    const url = response.url
-    const data = await response.json();
-    const req = await fetch(url);
-    const result = await req.json();
-    console.log(result)
+export default function Page(props:Params) {
+    const router = useRouter()
+    const [question, setQuestion] = useState<any>({});
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const questionResponse = await fetch("http://localhost:8000/questions/"+props.params.problem_id);
+
+                const questionData = await questionResponse.json();
+
+                setQuestion(questionData);
+                console.log(question)
+
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
     return(
-    <div className="mt-10 space-x-16">
-        <div className="container max-w-3xl px-4 mt-24 mx-auto sm:px-8">
-            <div>
-                <h2 className="mt-12 mr-10 text-right">
+        <div className="mx-auto mt-0 max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+            <div className="mx-auto mb-0 mt-8 max-w-3xl space-y-4">
+                <h2 className="mt-12 mr-5 text-right">
                     <Logout/>
                 </h2>
                 <h1 className="font-bold text-5xl mt-3 ml-3">
-                  問題一覧
+                    問題実施
                 </h1>
-                <h3 className="text-xl mt-14 ml-3">
-                  参加しているイベント : {result.title}
-                </h3>
             </div>
 
-            <div className="py-8">
-                <div className="px-4 py-4 mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
-                    <div className="inline-block min-w-full overflow-hidden rounded-lg shadow">
-                        <table className="min-w-full leading-normal text-center">
-                            <thead>
-                                <tr>
-                                    <Label title="難易度"/>
-                                    <Label title="問題名"/>
-                                    <Label title="実行制限時間"/>
-                                    <Label title="メモリ制限"/>
-                                    <Label title=""/>
-                                </tr>
-                            </thead>
-                                <tbody>
-                                    <tr>
-                                        <Row title={result.question[0].title}/>
-                                        <Row title={result.question[0].problem}/>
-                                        <Row title={result.question[0].in_format}/>
-                                        <Row title={result.question[0].out_format}/>
-                                        <td className="px-2 py-5 text-sm bg-white border-b border-gray-200">
-                                            <p className="text-gray-900 whitespace-no-wrap">
-                                            <Solve/>
-                                            </p>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                        </table>
-                    </div>
-                </div>
+        <form action="#" className="mx-auto mt-8 max-w-3xl space-y-4">
+            <label htmlFor="HeadlineAct" className="block text-sm font-medium text-gray-900">
+                使用言語
+            </label>
+            <select
+                className="block rounded-md border-0 w-1/3 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                <option value="">Select Language</option>
+                <option value="0">C</option>
+                <option value="1">Python</option>
+                <option value="2">TypeScript</option>
+                <option value="3">Ruby</option>
+            </select>
+            <Print title={"問題"} message={question.problem} />
+            <Print title={"制約"} message={question.condition} />
+            <Print title={"入力"} sub_title={"下記のような標準入力から入力する。"} message={question.in_format}/>
+            <Print title={"出力"} message={question.out_format}/>
+            <Print title={"入力例 1"} message={question.in_sample_1}/>
+            <Print title={"出力例 1"} message={question.out_sample_1}/>
+            <Print title={"入力例 2"} message={question.in_sample_2}/>
+            <Print title={"出力例 2"} message={question.out_sample_2}/>
+            <Wide title={"ソースコード"} message={""}/>
+            <div className="flex justify-evenly">
+                <button
+                    type="button" onClick={()=>router.back()}
+                    className="px-6 py-2 rounded-full focus:outline-none transition ease-in duration-200 hover:bg-gray-800 hover:text-white border-2 border-gray-900 ">
+                    キャンセル
+                </button>
+                <Submit/>
             </div>
+            </form>
         </div>
-    </div>
-    )
+        )
   }

@@ -8,36 +8,50 @@ import Logout from "@/components/Buttons/Logout";
 import Input from "@/components/Forms/Input";
 import Submit from "@/components/Buttons/Submit";
 
-export default async function Page(props:any) {
-    const response = await fetch("http://localhost:8000/users/"+props.params.id)
-    const url = response.url
-    const data = await response.json();
-    console.log(props.params.id);
-    console.log(url);
+export default function Page(props:any) {
+  const router = useRouter()
+  const [user, setUser] = useState<any>({});
+  useEffect(() => {
+      const fetchData = async () => {
+          try {
+              const userResponse = await fetch(`http://localhost:8000/users/${props.params.id}`);
+              const userData = await userResponse.json();
+              setUser(userData);
+              console.log(user)
+          } catch (error) {
+              console.error('Error fetching data:', error);
+          }
+      };
+      fetchData();
+  }, []);
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    const login_id = e.target.login_id.value;
+    const password = e.target.password.value;
+    const role = e.target.role.value;
+    const is_active = true;
+    const option = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ name, login_id, password, role, is_active})
+    };
+    try {
+      const response = await fetch(`http://localhost:8000/users/udpate/${props.params.id}`, option);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      console.log("Server response:", response);
 
-    const req = await fetch(url);
-    const result = await req.json();
-    console.log(result);
-
-  //   const [id, setId] = useState('')
-  //   const [name, setName] = useState('')
-  //   const [password, setPassword] = useState('')
-  //   const [created_at, setCreated_at] = useState('')
-  //   const [logined_at, setLogined_at] = useState('')
-
-  //   const router = useRouter();
-  //   useEffect(()=>{
-  //     fetch("url").then(resp=>resp.json).then(result=>{
-  //       console.log(result)
-  //       setId(result.id)
-  //       setName(result.name)
-  //       setPassword(result.password)
-  //       setCreated_at(result.created_at)
-  //       setLogined_at(result.logined_at)
-  //     })
-  //   }
-  // )
-
+      const result = await response.json();
+      console.log(result);
+      router.push('/admin/users');
+    } catch (error) {
+      console.error('There was an error!', error);
+    }
+  };
 
     return(
       <div className="mx-auto mt-0 max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
@@ -50,14 +64,16 @@ export default async function Page(props:any) {
           </h1>
         </div>
 
-        <form action="#" className="mx-auto mb-0 mt-8 max-w-3xl space-y-4">
+        <form
+                onSubmit={handleSubmit}
+                action="#" className="mx-auto mb-0 mt-8 max-w-3xl space-y-4">
           <div>
             <label htmlFor="text" className="sr-only">question</label>
-            <Input title={"名前"} message={"User Name"} value={result.name}/>
-            <Input title={"ログインID"} message={"Loing ID"} value={result.id}/>
-            <Input title={"パスワード"} message={"User Password"} value={result.password}/>
-            <Input title={"パスワード（確認）"} message={"User Password Confirmation"} value={result.password}/>
-            <Select title={"種別"} value={result.role} default={result.role}/>
+            <Input title={"名前"} name={"name"} message={"User Name"} value={user.name}/>
+            <Input title={"ログインID"} name={"login_id"} message={"Loing ID"} value={user.login_id}/>
+            <Input title={"パスワード"} name={"password"} message={"User Password"} value={user.password}/>
+            <Input title={"パスワード（確認）"} message={"User Password Confirmation"} value={user.password}/>
+            <Select title={"種別"} name={"role"} value={user.role} default={user.role}/>
           </div>
           <div className="flex justify-evenly">
             <Cancel title={"キャンセル"} path={"/admin/users"}/>

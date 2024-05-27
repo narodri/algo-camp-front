@@ -7,15 +7,26 @@ import Row from "@/components/Table/Row";
 import Label from "@/components/Table/Label";
 import Delete from "@/components/Buttons/Delete";
 
-export default async function Page() {
-    const router=useRouter()
-    const response = await fetch("http://localhost:8000/events/")
-    const data = await response.json();
-    const events1 = [JSON.stringify(data)];
-    const events = JSON.parse(events1[0]);
-    console.log(events)
-    let num_of_users = (events.length);
+export default function Page() {
+    const router = useRouter()
+    const [events, setEvents] = useState<any[]>([]);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const eventsResponse = await fetch("http://localhost:8000/events/");
+
+                const eventsData = await eventsResponse.json();
+
+                setEvents(eventsData);
+                console.log(events)
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     return(
       <div className="mt-10 space-x-16">
