@@ -29,12 +29,6 @@ export default function Page(props:any) {
 
         fetchData();
     }, []);
-    const option = {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-        };
 
     return(
     <div className="mt-10 space-x-16">

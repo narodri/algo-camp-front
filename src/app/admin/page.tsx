@@ -1,7 +1,3 @@
-// 'use client' // CSRの設定
-
-// import { useState } from "react"
-import Link from "next/link";
 import Header1 from "@/components/Headers/Header1";
 import Logout from "@/components/Buttons/Logout";
 import Menu from "@/components/Buttons/Menu";

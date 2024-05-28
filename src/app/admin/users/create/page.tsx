@@ -1,16 +1,15 @@
 'use client' // CSRの設定
 
-import { useState } from "react"
 import Cancel from "@/components/Buttons/Cancel";
 import Select from "@/components/Forms/Select/Select_role";
 import Logout from "@/components/Buttons/Logout";
 import Input from "@/components/Forms/Input";
 import Submit from "@/components/Buttons/Submit";
-import {POST} from "@/app/api/users/route"
 import { useRouter } from "next/navigation";
 
 export default async function Page(props:any) {
     const router = useRouter();
+
     const handleSubmit = async (e: any) => {
       e.preventDefault();
       const name = e.target.name.value;
