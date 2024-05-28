@@ -2,12 +2,12 @@
 
 import { useRouter } from 'next/navigation'
 
-export default function Delete_user(props: any) {
+export default function Delete_event(props: any) {
     const router = useRouter();
 
-    const deactivateUser = async () => {
+    const deactivateEvent = async () => {
         try {
-            const response = await fetch(`http://localhost:8000/users/${props.id}`,
+            const response = await fetch(`http://localhost:8000/events/${props.id}`,
                 {
                 method: 'PUT',
                 headers: {
@@ -21,8 +21,8 @@ export default function Delete_user(props: any) {
             if (!response.ok) {
                 throw new Error("Network response was not ok");
             }
-            console.log("User deactivated successfully!");
-            router.push(`/admin/users/`)
+            console.log("Event deactivated successfully!");
+            router.push(`/admin/events/`)
         } catch (error) {
             console.error("There was an error!", error);
         }
@@ -30,10 +30,10 @@ export default function Delete_user(props: any) {
 
     return (
         <button
-        // type="submit"
+        type="button"
             onClick={() => {
                 if (window.confirm("本当に削除しますか?")) {
-                deactivateUser();
+                deactivateEvent();
                 }
                 location.reload();
             }}

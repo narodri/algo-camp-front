@@ -6,7 +6,7 @@ import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import Header2 from "@/components/Headers/Header2";
 import Row from "@/components/Table/Row";
 import Label from "@/components/Table/Label";
-import Delete from "@/components/Buttons/Delete";
+import Delete_question from "@/components/Buttons/Delete/Delete_question";
 
 export default function Page(props:Params) {
     const router = useRouter()
@@ -64,7 +64,7 @@ export default function Page(props:Params) {
                                                 </button>
                                                 </p>
                                             </td>
-                                            <Row title={<Delete/>}/>
+                                            <Row title={<Delete_question id={question.id}/>}/>
                                         </tr>
                                     </tbody>
                                 )})}

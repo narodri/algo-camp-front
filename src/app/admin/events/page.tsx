@@ -6,6 +6,7 @@ import Header2 from "@/components/Headers/Header2";
 import Row from "@/components/Table/Row";
 import Label from "@/components/Table/Label";
 import Delete from "@/components/Buttons/Delete";
+import Delete_event from "@/components/Buttons/Delete/Delete_events";
 
 export default function Page() {
     const router = useRouter()
@@ -62,7 +63,7 @@ export default function Page() {
                                                 </button>
                                                 </p>
                                             </td>
-                                        <Row title={<Delete/>}/>
+                                        <Row title={<Delete_event id={event.id}/>}/>
                                         </tr>
                                     </tbody>
                                 )})}
