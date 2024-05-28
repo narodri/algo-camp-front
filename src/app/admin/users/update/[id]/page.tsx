@@ -7,6 +7,8 @@ import Select from "@/components/Forms/Select/Select_role";
 import Logout from "@/components/Buttons/Logout";
 import Input from "@/components/Forms/Input";
 import Submit from "@/components/Buttons/Submit";
+import Input_disable from "@/components/Forms/Input_disable";
+import Select_role_disable from "@/components/Forms/Select/Select_role_disable";
 
 export default function Page(props:any) {
   const router = useRouter()
@@ -70,10 +72,10 @@ export default function Page(props:any) {
           <div>
             <label htmlFor="text" className="sr-only">question</label>
             <Input title={"名前"} name={"name"} message={"User Name"} value={user.name}/>
-            <Input title={"ログインID"} name={"login_id"} message={"Loing ID"} value={user.login_id}/>
+            <Input_disable title={"ログインID"} name={"login_id"} message={"Loing ID"} value={user.login_id}/>
             <Input title={"パスワード"} name={"password"} message={"User Password"} value={user.password}/>
             <Input title={"パスワード（確認）"} message={"User Password Confirmation"} value={user.password}/>
-            <Select title={"種別"} name={"role"} value={user.role} default={user.role}/>
+            <Select_role_disable title={"種別"} name={"role"} value={user.role} default={user.role}/>
           </div>
           <div className="flex justify-evenly">
             <Cancel title={"キャンセル"} path={"/admin/users"}/>

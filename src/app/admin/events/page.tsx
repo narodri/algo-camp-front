@@ -5,7 +5,6 @@ import {useRouter} from "next/navigation"
 import Header2 from "@/components/Headers/Header2";
 import Row from "@/components/Table/Row";
 import Label from "@/components/Table/Label";
-import Delete from "@/components/Buttons/Delete";
 import Delete_event from "@/components/Buttons/Delete/Delete_events";
 
 export default function Page() {
@@ -50,9 +49,9 @@ export default function Page() {
                                 return (
                                     <tbody>
                                         <tr>
-                                        <Row title={event.id}/>
-                                        <Row title={event.opened_at}/>
-                                        <Row title={event.end_at}/>
+                                        <Row title={event.title}/>
+                                        <Row title={event.opened_at_str + " ~ "}/>
+                                        <Row title={event.end_at_str}/>
                                         <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
                                                 <p className="text-gray-900 whitespace-no-wrap">
                                                 <button

@@ -6,6 +6,7 @@ import Logout from "@/components/Buttons/Logout";
 import Input from "@/components/Forms/Input";
 import Submit from "@/components/Buttons/Submit";
 import { useRouter } from "next/navigation";
+import Select_role from "@/components/Forms/Select/Select_role";
 
 export default async function Page(props:any) {
     const router = useRouter();
@@ -58,7 +59,7 @@ export default async function Page(props:any) {
             <Input title={"ログインID"} name={"login_id"} message={"Login ID"} />
             <Input title={"パスワード"} name={"password"} message={"User Password"}/>
             <Input title={"パスワード（確認）"} message={"User Password Confirmation"}/>
-            <Select title={"種別"} name={"role"} />
+            <Select_role title={"種別"} name={"role"} />
           </div>
           <div className="flex justify-evenly">
             <Cancel title={"キャンセル"} path={"/admin/users"}/>

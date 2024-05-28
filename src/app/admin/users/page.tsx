@@ -54,7 +54,7 @@ export default function Page(props:any) {
                                         <tr>
                                             <Row title={user.id}/>
                                             <Row title={user.name}/>
-                                            <Row title={user.created_at}/>
+                                            <Row title={user.created_at_str}/>
                                             {
                                             user.role === 1
                                             ? <Row title={"admin"}/>

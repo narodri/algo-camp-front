@@ -15,7 +15,7 @@ export default function Page(props:any) {
         const fetchData = async () => {
             try {
                 const [eventsResponse, usersResponse] = await Promise.all([
-                    fetch("http://localhost:8000/events_active"),
+                    fetch("http://localhost:8000/events"),
                     fetch("http://localhost:8000/users/"+props.params.id)
                 ]);
 

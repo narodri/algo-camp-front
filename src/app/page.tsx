@@ -76,11 +76,11 @@ export default function Page() {
           <button className="mr-2 inline-block rounded-full border border-indigo-600 bg-indigo-100 p-3 text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500" onClick={() => setCount(count + 1)}>👍</button>
           <p className="text-sm grid font-semibold leading-6 text-gray-900 ml-2 mt-3">いいね！ {count}</p>
         </div>
-        <div className="mt-10 text-center">
+        {/* <div className="mt-10 text-center">
           <div className="mb-10 text-3xl font-semibold">Developer mode!</div>
           <Link href="/admin" className="font-bold text-2xl border border-indigo-500 m-10">Admin </Link>
           <Link href="/events" className="font-bold text-2xl border border-indigo-500 m-10">Student</Link>
-        </div>
+        </div> */}
       </main>
     )
   }
