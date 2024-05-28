@@ -4,12 +4,12 @@ import { useState, useEffect } from "react";
 
 export default function Select_event(props:any){
     const [events, setEvents] = useState<any>([]);
-  
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const eventsResponse = await fetch("http://localhost:8000/events/");
-  
+
                 const eventsData = await eventsResponse.json();
                 console.log(eventsData);
                 setEvents(eventsData);
@@ -17,10 +17,9 @@ export default function Select_event(props:any){
                 console.error('Error fetching data:', error);
             }
         };
-  
+
         fetchData();
     }, []);
-    console.log(events)
     return(
         <div className="mx-auto mb-0 mt-8 space-y-4">
             <label htmlFor="HeadlineAct" className="block text-sm font-medium text-gray-900">

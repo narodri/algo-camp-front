@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import Cancel from "@/components/Buttons/Cancel";
-import Select from "@/components/Forms/Select/Select_role";
 import Logout from "@/components/Buttons/Logout";
 import Input from "@/components/Forms/Input";
 import Submit from "@/components/Buttons/Submit";
@@ -26,6 +25,7 @@ export default function Page(props:any) {
       };
       fetchData();
   }, []);
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const name = e.target.name.value;
@@ -41,7 +41,7 @@ export default function Page(props:any) {
       body: JSON.stringify({ name, login_id, password, role, is_active})
     };
     try {
-      const response = await fetch(`http://localhost:8000/users/udpate/${props.params.id}`, option);
+      const response = await fetch(`http://localhost:8000/users/update/${props.params.id}`, option);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
