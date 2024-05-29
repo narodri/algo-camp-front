@@ -58,6 +58,9 @@ export default function Page(props:any) {
                 <div className="py-8">
                     <div className="px-4 py-4 mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
                         <div className="inline-block min-w-full overflow-hidden rounded-lg shadow">
+                            {events.length === 0
+                            ? (<p className="text-center text-m mt-4 mb-4">開催中のイベントがありません 😯</p>)
+                            : (
                             <table className="min-w-full leading-normal text-center">
                                 <thead>
                                     <tr>
@@ -71,8 +74,8 @@ export default function Page(props:any) {
                                     {events.map((event: any) => (
                                         <tr key={event.id}>
                                             <Row title={event.title} />
-                                            <Row title={event.opened_at} />
-                                            <Row title={event.end_at} />
+                                            <Row title={event.opened_at_str} />
+                                            <Row title={event.end_at_str} />
                                             <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
                                                 <p className="text-gray-900 whitespace-no-wrap">
                                                     <button
@@ -88,6 +91,7 @@ export default function Page(props:any) {
                                     ))}
                                 </tbody>
                             </table>
+                            )}
                         </div>
                     </div>
                 </div>

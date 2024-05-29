@@ -37,6 +37,9 @@ export default function Page(props:Params) {
             <div className="py-8">
                 <div className="px-4 py-4 mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
                     <div className="inline-block min-w-full overflow-hidden rounded-lg shadow">
+                        {questions.length === 0
+                            ? (<p className="text-center text-m mt-4 mb-4">有効な問題が存在しません 😯</p>)
+                            : (
                         <table className="min-w-full leading-normal text-center">
                             <thead>
                                 <tr>
@@ -68,7 +71,7 @@ export default function Page(props:Params) {
                                         </tr>
                                     </tbody>
                                 )})}
-                        </table>
+                        </table>)}
                     </div>
                 </div>
             </div>

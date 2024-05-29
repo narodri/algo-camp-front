@@ -11,6 +11,7 @@ export default function Input_date(props:any){
             </label>
             <input
                 type="datetime-local"
+                required={props.required}
                 defaultValue={props.value}
                 // id="name-with-label"
                 className="block rounded-md border-0 w-full py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"

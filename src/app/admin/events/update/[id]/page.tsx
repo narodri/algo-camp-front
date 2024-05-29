@@ -11,6 +11,7 @@ import Input_date from "@/components/Forms/Input_date";
 export default function Page(props:any) {
     const router = useRouter()
     const [event, setEvent] = useState<any>({});
+    const [errorMessage, setErrorMessage] = useState<string>("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -30,8 +31,6 @@ export default function Page(props:any) {
     const handleSubmit = async (e: any) => {
       e.preventDefault();
       const title = e.target.title.value;
-      // const opened_at = e.target.opened_at.value;
-      // const end_at = e.target.end_at.value;
       const opened_at = new Date(e.target.opened_at.value).toISOString();
       const end_at = new Date(e.target.end_at.value).toISOString();
       const is_active = true;
@@ -50,8 +49,13 @@ export default function Page(props:any) {
         const result = await response.json();
         console.log(result);
         router.push('/admin/events');
-      } catch (error) {
+      } catch (error:any) {
         console.error('There was an error!', error);
+        if (error.message.includes("Failed to fetch")) {
+          setErrorMessage("イベント名が既に存在します。別のイベント名にしてください。🧐");
+        } else {
+          setErrorMessage("エラーが発生しました。🤗🤗🤗🤗🤗🤗🤗🤗🤗🤗🤗");
+        }
       }
     };
 
@@ -67,11 +71,12 @@ export default function Page(props:any) {
         </div>
 
         <form onSubmit={handleSubmit} className="mx-auto mb-0 mt-8 max-w-3xl space-y-4">
+        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
           <div>
             <label htmlFor="text" className="sr-only" >Event</label>
-            <Input title={"イベント名"} name={"title"} message={"Event Name"} value={event.title}/>
-            <Input_date title={"開始"} name={"opened_at"} message={"Start at"} value={event.opened_at ? new Date(event.opened_at).toISOString().slice(0,16) : ""}/>
-            <Input_date title={"終了"} name={"end_at"} message={"End at"} value={event.end_at ? new Date(event.end_at).toISOString().slice(0,16) : ""}/>
+            <Input title={"イベント名"} name={"title"} message={"Event Name"} value={event.title} required={true}/>
+            <Input_date title={"開始"} name={"opened_at"} message={"Start at"} value={event.opened_at ? new Date(event.opened_at).toISOString().slice(0,16) : ""} required={true}/>
+            <Input_date title={"終了"} name={"end_at"} message={"End at"} value={event.end_at ? new Date(event.end_at).toISOString().slice(0,16) : ""} required={true}/>
 
           </div>
           <div className="flex justify-evenly">

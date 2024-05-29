@@ -12,6 +12,42 @@ import Select_role_disable from "@/components/Forms/Select/Select_role_disable";
 export default function Page(props:any) {
   const router = useRouter()
   const [user, setUser] = useState<any>({});
+  const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirm, setConfirm] = useState('');
+  const [confirmError, setConfirmError] = useState('');
+
+
+  
+  const onChangePasswordHandler = (e:any) => {
+    const { name, value } = e.target;
+    if (name === 'password') {
+      setPassword(value);
+      passwordCheckHandler(value, confirm);
+    } else {
+      setConfirm(value);
+      passwordCheckHandler(password, value);
+    }
+  }
+  const passwordCheckHandler = (password:any, confirm:any) => {
+    const passwordRegex = /^[a-z\d!@*&-_]{8,16}$/;
+    if (password === '') {
+      setPasswordError('비밀번호를 입력해주세요.');
+      return false;
+    } else if (!passwordRegex.test(password)) {
+      setPasswordError('비밀번호는 8~16자의 영소문자, 숫자, !@*&-_만 입력 가능합니다.');
+      return false;
+    } else if (confirm !== password) {
+      setPasswordError('');
+      setConfirmError('비밀번호가 일치하지 않습니다.');
+      return false;
+    } else {
+      setPasswordError('');
+      setConfirmError('');
+      return true;
+    }
+  }
+
   useEffect(() => {
       const fetchData = async () => {
           try {

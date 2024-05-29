@@ -25,7 +25,6 @@ export default function Page(props:Params) {
                 console.log(event)
                 setQuestion(questionData);
                 console.log(question)
-
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -46,16 +45,19 @@ export default function Page(props:Params) {
                     <Logout/>
                 </h2>
                 <h1 className="font-bold text-5xl mt-3 ml-3">
-                  問題一覧
+                    問題一覧
                 </h1>
                 <h3 className="text-xl mt-14 ml-3">
-                  参加しているイベント : {event.title}
+                    参加しているイベント : {event.title}
                 </h3>
             </div>
 
             <div className="py-8">
                 <div className="px-4 py-4 mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
                     <div className="inline-block min-w-full overflow-hidden rounded-lg shadow">
+                    {Object.keys(question).length === 0 ? (
+                            <p className="text-center text-xl mt-4 mb-4">問題が存在しません 😯</p>
+                        ) : (
                         <table className="min-w-full leading-normal text-center">
                             <thead>
                                 <tr>
@@ -68,7 +70,14 @@ export default function Page(props:Params) {
                             </thead>
                                 <tbody>
                                     <tr>
-                                        <Row title={question.level}/>
+                                        {/* <Row title={question.level}/> */}
+                                        {
+                                        [0, 1, 2, 3, 4].map((number) => (
+                                                question.level === number
+                                                ? <Row title={String.fromCharCode(65 + number)}/>
+                                                : <></>
+                                                ))
+                                        }
                                         <Row title={question.title}/>
                                         <Row title={question.limit_millisec}/>
                                         <Row title={question.limit_memory}/>
@@ -85,10 +94,12 @@ export default function Page(props:Params) {
                                     </tr>
                                 </tbody>
                         </table>
+                        )
+                        }
                     </div>
                 </div>
             </div>
         </div>
     </div>
     )
-  }
+}

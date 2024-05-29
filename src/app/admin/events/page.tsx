@@ -35,7 +35,10 @@ export default function Page() {
             <div className="py-8">
                 <div className="px-4 py-4 mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
                     <div className="inline-block min-w-full overflow-hidden rounded-lg shadow">
-                        <table className="min-w-full leading-normal text-center">
+                        {events.length === 0
+                            ? (<p className="text-center text-m mt-4 mb-4">有効なイベントが存在しません 😯</p>)
+                            : (
+                        <table className=" min-w-full leading-normal text-center">
                             <thead>
                                 <tr>
                                     <Label title={"イベント名"}/>
@@ -66,7 +69,7 @@ export default function Page() {
                                         </tr>
                                     </tbody>
                                 )})}
-                        </table>
+                        </table>)}
                     </div>
                 </div>
             </div>

@@ -1,20 +1,20 @@
 'use client' // CSRの設定
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import Cancel from "@/components/Buttons/Cancel";
 import Logout from "@/components/Buttons/Logout";
 import Input from "@/components/Forms/Input";
 import Input_date from "@/components/Forms/Input_date";
 import Submit from "@/components/Buttons/Submit";
 
-export default async function Page(props:any) {
+export default function Page(props:any) {
   const router = useRouter();
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
     const handleSubmit = async (e: any) => {
       e.preventDefault();
       const title = e.target.title.value;
-      // const opened_at = e.target.opened_at.value;
-      // const end_at = e.target.end_at.value;
       const opened_at = new Date(e.target.opened_at.value).toISOString();
       const end_at = new Date(e.target.end_at.value).toISOString();
       const is_active = true;
@@ -30,11 +30,19 @@ export default async function Page(props:any) {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
+        // else{
+        //   setErrorMessage(error.message || 'Network response was not ok');
+        // }
         const result = await response.json();
         console.log(result);
         router.push('/admin/events');
-      } catch (error) {
+      } catch (error:any) {
         console.error('There was an error!', error);
+        if (error.message.includes("Failed to fetch")) {
+          setErrorMessage("イベント名が既に存在します。別のイベント名にしてください。🧐");
+        } else {
+          setErrorMessage("エラーが発生しました。🤗🤗🤗🤗🤗🤗🤗🤗🤗🤗🤗");
+        }
       }
     };
 
@@ -50,11 +58,12 @@ export default async function Page(props:any) {
         </div>
 
         <form onSubmit={handleSubmit} className="mx-auto mb-0 mt-8 max-w-3xl space-y-4">
+          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
           <div>
             <label htmlFor="text" className="sr-only" >Event</label>
-            <Input title={"イベント名"} name={"title"} message={"Event Name"}/>
-            <Input_date title={"開始"} name={"opened_at"} message={"Start at"}/>
-            <Input_date title={"終了"} name={"end_at"} message={"End at"}/>
+            <Input title={"イベント名"} name={"title"} message={"Event Name"} required={true}/>
+            <Input_date title={"開始"} name={"opened_at"} message={"Start at"} required={true}/>
+            <Input_date title={"終了"} name={"end_at"} message={"End at"} required={true}/>
           </div>
           <div className="flex justify-evenly">
             <Cancel title={"キャンセル"} path={"/admin/events"}/>
