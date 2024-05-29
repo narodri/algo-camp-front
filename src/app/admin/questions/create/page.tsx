@@ -74,29 +74,29 @@ export default async function Page(props:any) {
           className="mx-auto mt-8 max-w-3xl space-y-4">
           <div>
             <label htmlFor="text" className="sr-only">question</label>
-            <Select_event title={"対応イベント名"} name={"event_id"}/>
-            <Input title={"問題名"} name={"title"} message={"Question Title"}/>
-            <Select_level title={"難易度"} name={"level"} message={"A ~ D"}/>
-            <Input title={"制限時間"} name={"limit_millisec"} message={"Time Limit (sec)"}/>
-            <Input title={"制限メモリ"} name={"limit_memory"} message={"Memory Limit (bytes)"}/>
-            <Wide title={"問題内容"} name={"problem"} message={""} />
-            <Input title={"制約"} name={"condition"} message={"Constraints"}/>
-            <Input title={"入力フォーマット"} name={"in_format"} message={"Input Format"}/>
+            <Select_event title={"対応イベント名"} name={"event_id"} required={true}/>
+            <Input title={"問題名"} name={"title"} message={"Question Title"} required={true}/>
+            <Select_level title={"難易度"} name={"level"} message={"A ~ D"} required={true}/>
+            <Input title={"制限時間"} name={"limit_millisec"} message={"Time Limit (sec)"} required={true} value={"2000"} pattern={"[0-9]*"}/>
+            <Input title={"制限メモリ"} name={"limit_memory"} message={"Memory Limit (bytes)"} required={true} value={"2000000"} pattern={"[0-9]*"}/>
+            <Wide title={"問題内容"} name={"problem"} message={""} required={true}/>
+            <Input title={"制約"} name={"condition"} message={"Constraints"} />
+            <Input title={"入力フォーマット"} name={"in_format"} message={"Input Format"} />
             <Input title={"出力フォーマット"} name={"out_format"} message={"Outpur Format"} />
-            <Input title={"入力例１"} name={"in_sample_1"} message={"Input Sample 1"}/>
+            <Input title={"入力例１"} name={"in_sample_1"} message={"Input Sample 1"} />
             <Input title={"出力例１"} name={"out_sample_1"} message={"Output Sample 1"} />
-            <Input title={"入力例２"} name={"in_sample_2"} message={"Input Sample 2"}/>
+            <Input title={"入力例２"} name={"in_sample_2"} message={"Input Sample 2"} />
             <Input title={"出力例２"} name={"out_sample_2"} message={"Output Sample 2"} />
             <Input title={"テスト入力値１"} name={"in_test_1"} message={"Test Case : input 1"}/>
             <Input title={"テスト出力値１"} name={"out_test_1"} message={"Test Case : output 1"} />
-            <Input title={"テスト入力値２"} name={"in_test_2"} message={"Test Case : input 2"}/>
+            <Input title={"テスト入力値２"} name={"in_test_2"} message={"Test Case : input 2"} />
             <Input title={"テスト出力値２"} name={"out_test_2"} message={"Test Case : output 2"}/>
             <Input title={"テスト入力値３"} name={"in_test_3"} message={"Test Case : input 3"} />
             <Input title={"テスト出力値３"} name={"out_test_3"} message={"Test Case : output 3"} />
             <Input title={"テスト入力値４"} name={"in_test_4"} message={"Test Case : input 4"} />
-            <Input title={"テスト出力値４"} name={"out_test_4"} message={"Test Case : output 4"} />
+            <Input title={"テスト出力値４"} name={"out_test_4"} message={"Test Case : output 4"}/>
             <Input title={"テスト入力値５"} name={"in_test_5"} message={"Test Case : input 5"} />
-            <Input title={"テスト出力値５"} name={"out_test_5"} message={"Test Case : output 5"}/>
+            <Input title={"テスト出力値５"} name={"out_test_5"} message={"Test Case : output 5"} />
           </div>
           <div className="flex justify-evenly">
             <Cancel title={"キャンセル"} path={"/admin/questions/"}/>

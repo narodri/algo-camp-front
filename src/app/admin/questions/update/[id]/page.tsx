@@ -133,8 +133,8 @@ export default function Page(props:any) {
               ))}
             </select>
         </div>
-            <Input title={"制限時間"} name={"limit_millisec"} message={"Time Limit (sec)"} value={question.limit_millisec}/>
-            <Input title={"制限メモリ"} name={"limit_memory"} message={"Memory Limit (byte)"} value={question.limit_memory}/>
+            <Input title={"制限時間"} name={"limit_millisec"} message={"Time Limit (sec)"} value={question.limit_millisec} required={true} pattern={"[0-9]*"}/>
+            <Input title={"制限メモリ"} name={"limit_memory"} message={"Memory Limit (byte)"} value={question.limit_memory} required={true} pattern={"[0-9]*"}/>
             <Wide title={"問題内容"} name={"problem"} message={""} value={question.problem}/>
             <Input title={"制約"} name={"condition"} message={"Constraints"} value={question.condition}/>
             <Input title={"入力フォーマット"} name={"in_format"} message={"Input Format"} value={question.in_format}/>
