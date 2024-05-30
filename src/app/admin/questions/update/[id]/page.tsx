@@ -1,4 +1,4 @@
-'use client' // CSRの設定
+'use client'
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -12,6 +12,7 @@ export default function Page(props:any) {
   const router = useRouter()
   const [question, setQuestion] = useState<any>({});
   const [events, setEvents] = useState<any>([]);
+  const [status, setStatus] = useState<any>("");
 
   useEffect(() => {
       const fetchData = async () => {
@@ -26,11 +27,10 @@ export default function Page(props:any) {
               const eventsData = await eventsResponse.json();
               console.log(eventsData);
               setEvents(eventsData);
-          } catch (error:any) {
-            // alert(response.status);
-            alert(error.message);
-            console.error('☹️エラー！', error);
-            router.push(`/admin/questions/`)
+          } catch (error: any) {
+            alert(`HTTP ${status}, ${error.message}`);
+            console.error('☹️エラー！');
+            router.push(`/admin/users/`)
           }
       };
 
@@ -72,16 +72,17 @@ export default function Page(props:any) {
     };
     try {
       const response = await fetch(`http://localhost:8000/questions/update/${props.params.id}`, option);
+      setStatus(response.status);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       console.log("Server response:", response);
-
-      const result = await response.json();
-      console.log(result);
+      // const result = await response.json();
       router.push('/admin/questions');
-    } catch (error) {
-      console.error('There was an error!', error);
+    } catch (error: any) {
+      alert(`HTTP ${status}, ${error.message}`);
+      console.error('☹️エラー！');
+      router.push(`/admin/users/`)
     }
   };
 

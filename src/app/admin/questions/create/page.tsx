@@ -1,6 +1,7 @@
-'use client' // CSRの設定
+'use client'
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import Cancel from "@/components/Buttons/Cancel";
 import Select_event from "@/components/Forms/Select/Select_event";
 import Select_level from "@/components/Forms/Select/Select_level";
@@ -12,6 +13,7 @@ import Submit from "@/components/Buttons/Submit";
 
 export default async function Page(props:any) {
     const router = useRouter();
+    const [status, setStatus] = useState<any>("");
 
     const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -48,17 +50,17 @@ export default async function Page(props:any) {
     }
     try {
       const response = await fetch('http://localhost:8000/questions/create', option);
+      setStatus(response.status);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      const result = await response.json();
-      console.log(result);
+      // const result = await response.json();
       router.push('/admin/questions');
-    } catch (error:any) {
-      // alert(response.status);
-      alert(error.message);
-      console.error('☹️エラー！', error);
-      router.push(`/admin/questions/`)
+    }
+    catch (error: any) {
+      alert(`HTTP ${status}, ${error.message}`);
+      console.error('☹️エラー！');
+      router.push(`/admin/users/`)
     }
   };
     return(

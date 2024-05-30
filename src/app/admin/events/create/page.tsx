@@ -9,8 +9,9 @@ import Input_date from "@/components/Forms/Input_date";
 import Submit from "@/components/Buttons/Submit";
 
 export default function Page(props:any) {
-  const router = useRouter();
-  const [errorMessage, setErrorMessage] = useState<string>("");
+    const router = useRouter();
+    const [errorMessage, setErrorMessage] = useState<string>("");
+    const [status, setStatus] = useState<any>("");
 
     const handleSubmit = async (e: any) => {
       e.preventDefault();
@@ -27,25 +28,24 @@ export default function Page(props:any) {
       };
       try {
         const response = await fetch('http://localhost:8000/events/create', option);
+        setStatus(response.status);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        // else{
-        //   setErrorMessage(error.message || 'Network response was not ok');
-        // }
-        const result = await response.json();
-        console.log(result);
+        // const result = await response.json();
         router.push('/admin/events');
-      } catch (error:any) {
-        console.error('There was an error!', error);
+      } catch (error: any) {
+        alert(`HTTP ${status}, ${error.message}`);
+        console.error('☹️エラー！');
+        router.push(`/admin/users/`)
+
         if (error.message.includes("Failed to fetch")) {
           setErrorMessage("イベント名が既に存在します。別のイベント名にしてください。🧐");
         } else {
           setErrorMessage("エラーが発生しました。🤗🤗🤗🤗🤗🤗🤗🤗🤗🤗🤗");
         }
-      }
     };
-
+  }
     return(
       <div className="mx-auto mt-0 max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto mb-0 mt-8 max-w-3xl space-y-4">

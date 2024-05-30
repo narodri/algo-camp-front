@@ -1,4 +1,4 @@
-'use client' // CSRの設定
+'use client'
 
 import Cancel from "@/components/Buttons/Cancel";
 import Logout from "@/components/Buttons/Logout";
@@ -10,34 +10,46 @@ import Select_role from "@/components/Forms/Select/Select_role";
 
 export default function Page(props: any) {
   const router = useRouter();
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage1, setErrorMessage1] = useState("");
+  const [errorMessage2, setErrorMessage2] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
-  const [status, setStatus] = useState({});
+  const [status, setStatus] = useState<any>("");
   const pattern = "(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{10,}";
-  // const pattern2 = /^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{10,}$/
 
   useEffect(() => {
+    if (password && !new RegExp(pattern).test(password)){
+      setErrorMessage1("パスワードは10文字以上、且つ英字、数字、記号を最低1つずつ組み合わせたものにしてください。");
+    }
+    else {
+      setErrorMessage1("");
+    }
     if (password && password2 && password !== password2) {
-      setErrorMessage("パスワードが一致していません。");
-    } else if (password && password2 && password === password2 && !new RegExp(pattern).test(password)) {
-      setErrorMessage("パスワードは10文字以上、且つ英字、数字、記号を最低1つずつ組み合わせたものにしてください。");
-    } else if (password && password2 && password === password2) {
-      setErrorMessage("😊 ✅");
-    } else {
-      setErrorMessage("");
+      setErrorMessage2("パスワードが一致していません。");
+    }
+    else if (password && password2 && password === password2) {
+      setErrorMessage2("😊 ✅");
+    }
+    else {
+      setErrorMessage2("");
     }
   }, [password, password2]);
 
   const handlePasswordBlur = () => {
+    if (password && !new RegExp(pattern).test(password)){
+      setErrorMessage1("パスワードは10文字以上、且つ英字、数字、記号を最低1つずつ組み合わせたものにしてください。");
+    }
+    else {
+      setErrorMessage1("");
+    }
     if (password && password2 && password !== password2) {
-      setErrorMessage("パスワードが一致していません。");
-    } else if (password && password2 && password === password2 && !new RegExp(pattern).test(password)) {
-      setErrorMessage("パスワードは10文字以上、且つ英字、数字、記号を最低1つずつ組み合わせたものにしてください。");
-    } else if (password && password2 && password === password2) {
-      setErrorMessage("😊 ✅");
-    } else {
-      setErrorMessage("");
+      setErrorMessage2("パスワードが一致していません。");
+    }
+    else if (password && password2 && password === password2) {
+      setErrorMessage2("😊 ✅");
+    }
+    else {
+      setErrorMessage2("");
     }
   };
 
@@ -56,18 +68,15 @@ export default function Page(props: any) {
     };
     try {
       const response = await fetch('http://localhost:8000/users/create', option);
-      const result = await response.json();
       setStatus(response.status);
-      alert(result.status)
+      // const result = await response.json();
       if (!response.ok) {
-        throw new Error(result.message || 'Network response was not ok');
-        // alert(result.error.message);
+        throw new Error('Network response was not ok');
       }
       router.push('/admin/users');
-    } catch (error:any) {
-      // alert(response.status);
-      alert(error.message);
-      console.error('☹️エラー！', error);
+    } catch (error: any) {
+      alert(`HTTP ${status}, ${error.message}`);
+      console.error('☹️エラー！');
       router.push(`/admin/users/`)
     }
   };
@@ -90,17 +99,18 @@ export default function Page(props: any) {
           <Input title={"名前"} name={"name"} message={"User Name"} required={true} />
           <Input title={"ログインID"} name={"login_id"} message={"Login ID"} required={true} />
           <Input title={"パスワード"} name={"password"} message={"User Password"} value={password}
-            required={true} pattern={pattern}
+            required={true} pattern={pattern} type={"password"}
             onChange={(e: any) => (setPassword(e.target.value))}
             onBlur={handlePasswordBlur}
           />
+          {errorMessage1 && <div className="text-red-600">{errorMessage1}</div>}
           <Input
             title={"パスワード（確認）"} name={"password2"} message={"User Password Confirmation"} value={password2}
-            required={true} pattern={pattern}
-            onChange={(e: any) => setPassword2(e.target.value)}
+            required={true} pattern={pattern} type={"password"}
+            onChange={(e: any) => (setPassword2(e.target.value))}
             onBlur={handlePasswordBlur}
           />
-          {errorMessage && <div className="text-red-600">{errorMessage}</div>}
+          {errorMessage2 && <div className="text-red-600">{errorMessage2}</div>}
           <Select_role title={"種別"} name={"role"} />
         </div>
         <div className="flex justify-evenly">
@@ -111,3 +121,6 @@ export default function Page(props: any) {
     </div>
   );
 }
+
+
+
