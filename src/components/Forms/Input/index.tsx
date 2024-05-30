@@ -1,7 +1,3 @@
-// "use client"
-
-import Link from "next/link";
-
 export default function Input(props:any){
     return(
         <div className="mx-auto mb-0 mt-8 space-y-4">
@@ -21,7 +17,6 @@ export default function Input(props:any){
                 pattern={props.pattern}
                 minLength={props.minLength}
                 onInput={props.onInput}
-                // {errorMessage && <div className="text-red-600">{errorMessage}</div>}
                 placeholder={props.message}/>
         </div>
     )

@@ -87,8 +87,11 @@ export default function Page(props: any) {
 
       const result = await response.json();
       router.push('/admin/users');
-    } catch (error) {
-      console.error('There was an error!', error);
+    } catch (error:any) {
+      // alert(response.status);
+      alert(error.message);
+      console.error('☹️エラー！', error);
+      router.push(`/admin/users/`)
     }
   };
 

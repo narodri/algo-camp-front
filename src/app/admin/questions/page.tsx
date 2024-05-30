@@ -57,6 +57,12 @@ export default function Page(props:Params) {
                                             <Row title={question.id}/>
                                             <Row title={question.title}/>
                                             <Row title={question.event.title}/>
+                                            {/* <Row title={
+                                                question.event.map((even:any, i:any)=>{
+                                                    if(i===0) {return(even.title)}
+                                                    else      {return(" , "+even.title)}
+                                                })
+                                            }/> */}
                                             <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
                                                 <p className="text-gray-900 whitespace-no-wrap">
                                                 <button

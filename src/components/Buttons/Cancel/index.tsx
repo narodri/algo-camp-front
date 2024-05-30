@@ -1,6 +1,4 @@
 "use client"
-
-import Link from "next/link";
 import { useRouter } from 'next/navigation'  // Usage: App router
 
 export default function Cancel(props:any){

@@ -13,14 +13,14 @@ export default function Page(props: any) {
   const [errorMessage, setErrorMessage] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
+  const [status, setStatus] = useState({});
   const pattern = "(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{10,}";
-  const pattern2 = /^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{10,}$/
+  // const pattern2 = /^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{10,}$/
 
   useEffect(() => {
     if (password && password2 && password !== password2) {
       setErrorMessage("パスワードが一致していません。");
     } else if (password && password2 && password === password2 && !new RegExp(pattern).test(password)) {
-    // } else if (password && password2 && password === password2 && !pattern2.test(password)) {
       setErrorMessage("パスワードは10文字以上、且つ英字、数字、記号を最低1つずつ組み合わせたものにしてください。");
     } else if (password && password2 && password === password2) {
       setErrorMessage("😊 ✅");
@@ -33,7 +33,6 @@ export default function Page(props: any) {
     if (password && password2 && password !== password2) {
       setErrorMessage("パスワードが一致していません。");
     } else if (password && password2 && password === password2 && !new RegExp(pattern).test(password)) {
-    // } else if (password && password2 && password === password2 && !pattern2.test(password)) {
       setErrorMessage("パスワードは10文字以上、且つ英字、数字、記号を最低1つずつ組み合わせたものにしてください。");
     } else if (password && password2 && password === password2) {
       setErrorMessage("😊 ✅");
@@ -57,14 +56,19 @@ export default function Page(props: any) {
     };
     try {
       const response = await fetch('http://localhost:8000/users/create', option);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
       const result = await response.json();
-      console.log(result);
+      setStatus(response.status);
+      alert(result.status)
+      if (!response.ok) {
+        throw new Error(result.message || 'Network response was not ok');
+        // alert(result.error.message);
+      }
       router.push('/admin/users');
-    } catch (error) {
-      console.error('There was an error!', error);
+    } catch (error:any) {
+      // alert(response.status);
+      alert(error.message);
+      console.error('☹️エラー！', error);
+      router.push(`/admin/users/`)
     }
   };
 
@@ -78,7 +82,6 @@ export default function Page(props: any) {
           ユーザーの新規作成
         </h1>
       </div>
-
       <form
         onSubmit={handleSubmit}
         className="mx-auto mb-0 mt-8 max-w-3xl space-y-4">
@@ -88,13 +91,13 @@ export default function Page(props: any) {
           <Input title={"ログインID"} name={"login_id"} message={"Login ID"} required={true} />
           <Input title={"パスワード"} name={"password"} message={"User Password"} value={password}
             required={true} pattern={pattern}
-            onChange={(e:any) => (setPassword(e.target.value))}
+            onChange={(e: any) => (setPassword(e.target.value))}
             onBlur={handlePasswordBlur}
           />
           <Input
             title={"パスワード（確認）"} name={"password2"} message={"User Password Confirmation"} value={password2}
             required={true} pattern={pattern}
-            onChange={(e:any) => setPassword2(e.target.value)}
+            onChange={(e: any) => setPassword2(e.target.value)}
             onBlur={handlePasswordBlur}
           />
           {errorMessage && <div className="text-red-600">{errorMessage}</div>}
@@ -106,5 +109,5 @@ export default function Page(props: any) {
         </div>
       </form>
     </div>
-  )
+  );
 }

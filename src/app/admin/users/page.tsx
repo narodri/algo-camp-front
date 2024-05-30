@@ -27,9 +27,8 @@ export default function Page(props:any) {
         };
 
         fetchData();
-    }, [users]);
-    // }, []); 안에 유저 넣어봤음
-
+    // }, [users]);
+    }, []);
     return(
     <div className="mt-10 space-x-16">
         <div className="container max-w-3xl px-4 mt-24 mx-auto sm:px-0">

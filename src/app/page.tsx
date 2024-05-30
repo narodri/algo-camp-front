@@ -75,7 +75,7 @@ export default function Page() {
         <div className="mt-4 text-center">
           <div className="mb-10 text-3xl font-semibold">Developer mode!</div>
           <Link href="/admin" className="font-bold text-2xl border border-indigo-500 m-10">Admin </Link>
-          <Link href="/events" className="font-bold text-2xl border border-indigo-500 m-10">Student</Link>
+          <Link href="/events/1" className="font-bold text-2xl border border-indigo-500 m-10">Student</Link>
         </div>
       </main>
     )
