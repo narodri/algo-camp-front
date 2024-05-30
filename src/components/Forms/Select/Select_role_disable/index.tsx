@@ -8,7 +8,8 @@ export default function Select_role(props:any){
             <label htmlFor="HeadlineAct" className="block text-sm font-medium text-gray-900">
                 種別
             </label>
-            <select defaultValue={props.default} disabled
+            <select defaultValue={props.value} disabled
+                value={props.value}
                 name={props.name}
                 id="HeadlineAct"
                 className="block rounded-md border-0 w-1/3 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">

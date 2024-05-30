@@ -17,7 +17,7 @@ export default function Select_event(props:any){
                 console.error('Error fetching data:', error);
             }
         };
-  
+
         fetchData();
     }, []);
     console.log(events)
