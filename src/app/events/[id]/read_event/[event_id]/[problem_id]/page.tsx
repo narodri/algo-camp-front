@@ -1,19 +1,17 @@
 'use client' // CSRの設定
-
+import React from "react";
 import { useState, useEffect } from "react"
 import { useRouter } from 'next/navigation'
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import Logout from "@/components/Buttons/Logout";
-import Input from "@/components/Forms/Input";
 import Wide from "@/components/Forms/Wide";
 import Submit from "@/components/Buttons/Submit";
-import Cancel from "@/components/Buttons/Cancel";
 import Print from "@/components/Forms/Print"
 
 export default function Page(props:Params) {
     const router = useRouter()
     const [question, setQuestion] = useState<any>({});
-
+    const PL = require(`/public/runner.json`).apis[0].operations[0].parameters[1].allowableValues.values
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -50,13 +48,18 @@ export default function Page(props:Params) {
             <select
                 className="block rounded-md border-0 w-1/3 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                 <option value="">Select Language</option>
-                <option value="0">C</option>
-                <option value="1">Python</option>
-                <option value="2">TypeScript</option>
-                <option value="3">Ruby</option>
+                {
+                    PL.map((Language:any, i:any)=>{
+                        return(<option value={i}>{Language}</option>)
+                    })
+                }
             </select>
             <Print title={"問題"} message={question.problem} />
-            <Print title={"制約"} message={question.condition} />
+            <Print title={"制約"} message={
+                    question.condition
+                    ? question.condition
+                    : "制約無し"
+                } />
             <Print title={"入力"} sub_title={"下記のような標準入力から入力する。"} message={question.in_format}/>
             <Print title={"出力"} message={question.out_format}/>
             <Print title={"入力例 1"} message={question.in_sample_1}/>

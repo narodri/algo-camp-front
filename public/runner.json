@@ -1,0 +1,160 @@
+{
+    "apiVersion": "1.0",
+    "swaggerVersion": "1.2",
+    "basePath": "http://api.paiza.io",
+    "resourcePath": "runners",
+    "apis": [
+      {
+        "path": "/runners/create",
+        "operations": [
+          {
+            "Routes": null,
+            "summary": "Create runner session to build and run code.",
+            "notes": "Create runner session to build and run code.",
+            "parameters": [
+              {
+                "paramType": "query",
+                "name": "source_code",
+                "type": "string",
+                "description": "Source code",
+                "required": true
+              },
+              {
+                "paramType": "query",
+                "name": "language",
+                "type": "string",
+                "description": "Language",
+                "required": true,
+                "allowableValues": {
+                  "valueType": "LIST",
+                  "values": [
+                    "c",
+                    "cpp",
+                    "objective-c",
+                    "java",
+                    "kotlin",
+                    "scala",
+                    "swift",
+                    "csharp",
+                    "go",
+                    "haskell",
+                    "erlang",
+                    "perl",
+                    "python",
+                    "python3",
+                    "ruby",
+                    "php",
+                    "bash",
+                    "r",
+                    "javascript",
+                    "coffeescript",
+                    "vb",
+                    "cobol",
+                    "fsharp",
+                    "d",
+                    "clojure",
+                    "elixir",
+                    "mysql",
+                    "rust",
+                    "scheme",
+                    "commonlisp",
+                    "nadesiko",
+                    "typescript",
+                    "brainfuck",
+                    "plain"
+                  ]
+                }
+              },
+              {
+                "paramType": "query",
+                "name": "input",
+                "type": "string",
+                "description": "Input data for the program. Program read this data from standard input.",
+                "required": false
+              },
+              {
+                "paramType": "query",
+                "name": "longpoll",
+                "type": "boolean",
+                "description": "Enable long polling(default: false)",
+                "required": false
+              },
+              {
+                "paramType": "query",
+                "name": "longpoll_timeout",
+                "type": "double",
+                "description": "Longpoll timeout(default: 10)",
+                "required": false
+              }
+            ],
+            "responseMessages": [
+              {
+                "code": 200,
+                "responseModel": null,
+                "message": "<br/>JSON hash.<br/>{<br/>  id: session id(This should be used in get_status/get_details API),<br/>  status: status('running', 'completed'),<br/>  error: error message.<br/>}<br/>"
+              }
+            ],
+            "nickname": "Runners#create",
+            "method": "post"
+          }
+        ]
+      },
+      {
+        "path": "/runners/get_status",
+        "operations": [
+          {
+            "Routes": null,
+            "summary": "Get status of current session",
+            "notes": "Get status of current session",
+            "parameters": [
+              {
+                "paramType": "query",
+                "name": "id",
+                "type": "integer",
+                "description": "session id (returned by 'create' API)",
+                "required": true
+              }
+            ],
+            "responseMessages": [
+              {
+                "code": 200,
+                "responseModel": null,
+                "message": "<br/>  JSON hash.<br/>  {<br/>  id: session id,<br/>  status: status('running', 'completed'),<br/>  error: error message.<br/>  }<br/>  "
+              }
+            ],
+            "nickname": "Runners#get_status",
+            "method": "get"
+          }
+        ]
+      },
+      {
+        "path": "/runners/get_details",
+        "operations": [
+          {
+            "Routes": null,
+            "summary": "Get detailed session information.",
+            "notes": "Get detailed session information.",
+            "parameters": [
+              {
+                "paramType": "query",
+                "name": "id",
+                "type": "integer",
+                "description": "session id (returned by 'create' API)",
+                "required": true
+              }
+            ],
+            "responseMessages": [
+              {
+                "code": 200,
+                "responseModel": null,
+                "message": "<br/>    JSON hash.<br/>{<br/>\t\tid: Session id<br/>\t\tlanguage: language,<br/>\t\tnote: note,<br/>\t\tstatus: status('running', 'completed'),<br/><br/>\t\tbuild_stdout: build output to stdout,<br/>\t\tbuild_stderr: build output to stderr,<br/>\t\tbuild_exit_code: build exit code,<br/>\t\tbuild_time: build time(second),<br/>\t\tbuild_memory: build memory usage(bytes),<br/>\t\tbuild_result: build result('success', 'failure', 'error'),<br/><br/>\t\tstdout: code output to stdout,<br/>\t\tstderr: code output to stderr,<br/>\t\texit_code: exit code,<br/>\t\ttime: time to run(seconds),<br/>\t\tmemory: code memory usage(bytes),<br/>\t\tresult: code result('success', 'failure', 'error'),<br/>\t}<br/>"
+              }
+            ],
+            "nickname": "Runners#get_details",
+            "method": "get"
+          }
+        ]
+      }
+    ],
+    "authorizations": null
+  }

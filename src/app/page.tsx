@@ -4,8 +4,6 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation";
 import Header1 from "@/components/Headers/Header1";
 import Link from "next/link";
-// import Basic from "@/components/Forms/Basic";
-// import Password from "@/components/Forms/Password";
 import axios from "axios";
 
 export default function Page() {
