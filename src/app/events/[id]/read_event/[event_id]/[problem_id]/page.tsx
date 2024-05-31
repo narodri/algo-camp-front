@@ -15,6 +15,27 @@ export default function Page(props:Params) {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                const token = localStorage.getItem("jwt");
+                const c_id = localStorage.getItem("id");
+                const c_role = localStorage.getItem("role");
+
+                if (!token) {
+                    alert("You have to login first.");
+                    router.push(`/`);
+                    return;
+                }
+
+                const response_for_check = await fetch(`http://localhost:8000/user_expired/${c_id}`);
+                const check = await response_for_check.json();
+                const expireTimestamp = new Date(check.access_expired).getTime() / 1000;
+                const nowTimestamp = Date.now() / 1000;
+
+                if (expireTimestamp < nowTimestamp) {
+                    alert("Your token is expired! Please login again.");
+                    router.push(`/`);
+                    return;
+                }
+                
                 const questionResponse = await fetch("http://localhost:8000/questions/"+props.params.problem_id);
 
                 const questionData = await questionResponse.json();

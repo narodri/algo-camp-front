@@ -3,33 +3,13 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation";
 import Header1 from "@/components/Headers/Header1";
-import Link from "next/link";
 
 export default function Page() {
   const [count, setCount] = useState(0);
-  // const [id, setId] = useState('');
   const [login_id, setLoginId] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const router = useRouter();
-
-  // const handleLogin = async (e:any) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await axios.post('http://localhost:8000/login', {
-  //       id: parseInt(id),
-  //       password
-  //     });
-  //     const role = response.data.role;
-  //     if (role === 1) {
-  //       router.push('/admin/');
-  //     } else if (role === 0) {
-  //       router.push(`/events/${id}`);
-  //     }
-  //   } catch (error) {
-  //     alert('ログインに失敗しました。');
-  //   }
-  // };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,12 +33,13 @@ export default function Page() {
       if(data.role===1){
         router.push(`/admin/`);
       }
-      else if(data.role===1){
+      else if(data.role===0){
         router.push(`/events/${data.id}`);
       }
       else{
         location.reload();
         setMessage('Login failed');
+        alert('Login failed');
       }
     } else {
       setMessage("error");
@@ -67,7 +48,7 @@ export default function Page() {
 
     return (
       <main>
-        <Header1 title={"Fignny Camp!"}/>
+        <Header1 title={"하재현 Camp!"}/>
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm" />
           <form
           // onSubmit={handleLogin}
@@ -93,12 +74,6 @@ export default function Page() {
                 <label htmlFor="input2" className="text-sm grid font-medium leading-6 text-gray-900">
                     Password
                 </label>
-                {/* <input
-                    type="password" required maxLength={256} value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    id="name-with-label"
-                    className="block rounded-md border-0 w-80 py-2 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    placeholder="Your password" /> */}
                 <input
                   id="input2" name="input2"
                   className="block rounded-md border-0 w-80 py-2 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -120,11 +95,11 @@ export default function Page() {
           <button className="mr-2 inline-block rounded-full border border-indigo-600 bg-indigo-100 p-3 text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500" onClick={() => setCount(count + 1)}>👍</button>
           <p className="text-sm grid font-semibold leading-6 text-gray-900 ml-2 mt-3">いいね！ {count}</p>
         </div>
-        <div className="mt-4 text-center">
+        {/* <div className="mt-4 text-center">
           <div className="mb-10 text-3xl font-semibold">Developer mode!</div>
           <Link href="/admin" className="font-bold text-2xl border border-indigo-500 m-10">Admin </Link>
           <Link href="/events/1" className="font-bold text-2xl border border-indigo-500 m-10">Student</Link>
-        </div>
+        </div> */}
       </main>
     )
   }

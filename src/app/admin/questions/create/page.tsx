@@ -49,6 +49,26 @@ export default async function Page(props:any) {
       body: JSON.stringify({ event_id, title, level, limit_millisec, limit_memory, problem, condition, in_format, out_format, in_sample_1, out_sample_1, in_sample_2, out_sample_2, in_test_1, out_test_1, in_test_2, out_test_2, in_test_3, out_test_3, in_test_4, out_test_4, in_test_5, out_test_5, is_active})
     }
     try {
+      const token = localStorage.getItem("jwt");
+                const c_id = localStorage.getItem("id");
+                const c_role = localStorage.getItem("role");
+
+                if (!token) {
+                    alert("You have to login first.");
+                    router.push(`/`);
+                    return;
+                }
+
+                const response_for_check = await fetch(`http://localhost:8000/user_expired/${c_id}`);
+                const check = await response_for_check.json();
+                const expireTimestamp = new Date(check.access_expired).getTime() / 1000;
+                const nowTimestamp = Date.now() / 1000;
+
+                if (expireTimestamp < nowTimestamp) {
+                    alert("Your token is expired! Please login again.");
+                    router.push(`/`);
+                    return;
+                }
       const response = await fetch('http://localhost:8000/questions/create', option);
       setStatus(response.status);
       if (!response.ok) {

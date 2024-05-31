@@ -8,29 +8,6 @@ import Logout from "@/components/Buttons/Logout";
 import Label from "@/components/Table/Label";
 
 export default function Page(props:Params) {
-    // const router = useRouter()
-    // const [event, setEvent] = useState<any>({});
-    // const [question, setQuestion] = useState<any>({});
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const eventResponse = await fetch("http://localhost:8000/events/wq/"+props.params.event_id);
-    //             const eventData = await eventResponse.json();
-    //             const questionResponse = await fetch(`http://localhost:8000/questions/${eventData.question[0].id}`);
-    //             const questionData = await questionResponse.json();
-
-    //             setEvent(eventData);
-    //             console.log(event)
-    //             setQuestion(questionData);
-    //             console.log(question)
-    //         } catch (error) {
-    //             console.error('Error fetching data:', error);
-    //         }
-    //     };
-
-    //     fetchData();
-    // }, []);
 
     const router = useRouter()
     const [event, setEvent] = useState<any>({});
@@ -40,6 +17,27 @@ export default function Page(props:Params) {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                const token = localStorage.getItem("jwt");
+                const c_id = localStorage.getItem("id");
+                const c_role = localStorage.getItem("role");
+
+                if (!token) {
+                    alert("You have to login first.");
+                    router.push(`/`);
+                    return;
+                }
+
+                const response_for_check = await fetch(`http://localhost:8000/user_expired/${c_id}`);
+                const check = await response_for_check.json();
+                const expireTimestamp = new Date(check.access_expired).getTime() / 1000;
+                const nowTimestamp = Date.now() / 1000;
+
+                if (expireTimestamp < nowTimestamp) {
+                    alert("Your token is expired! Please login again.");
+                    router.push(`/`);
+                    return;
+                }
+
                 const eventResponse = await fetch("http://localhost:8000/events/wq/"+props.params.event_id);
                 const eventData = await eventResponse.json();
                 setEvent(eventData);
