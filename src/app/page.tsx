@@ -4,11 +4,10 @@ import { useState } from "react"
 import { useRouter } from "next/navigation";
 import Header1 from "@/components/Headers/Header1";
 import Link from "next/link";
-import axios from "axios";
 
 export default function Page() {
   const [count, setCount] = useState(0);
-  const [id, setId] = useState('');
+  // const [id, setId] = useState('');
   const [login_id, setLoginId] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -48,7 +47,19 @@ export default function Page() {
 
     if (res.status === 200) {
       setMessage('Login successful');
-      localStorage.setItem('jwt', data);
+      localStorage.setItem('jwt', data.access_token);
+      localStorage.setItem('role', data.role);
+      localStorage.setItem('id', data.id);
+      if(data.role===1){
+        router.push(`/admin/`);
+      }
+      else if(data.role===1){
+        router.push(`/events/${data.id}`);
+      }
+      else{
+        location.reload();
+        setMessage('Login failed');
+      }
     } else {
       setMessage("error");
     }

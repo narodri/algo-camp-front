@@ -2,7 +2,7 @@ import { NextResponse, NextRequest } from 'next/server';
 import jwt from 'jsonwebtoken';
 
 export async function POST(req: NextRequest) {
-    
+
     const jsonReq = await req.json()
     const {login_id, password} = jsonReq
     try{

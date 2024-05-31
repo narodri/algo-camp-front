@@ -3,7 +3,6 @@ import Logout from "@/components/Buttons/Logout";
 import Menu from "@/components/Buttons/Menu";
 
 export default function Page() {
-
     return(
         <body>
           <div className="bg-white">
